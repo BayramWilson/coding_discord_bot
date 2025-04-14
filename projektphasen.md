@@ -30,7 +30,7 @@ Dein *mentaler Assistent* (also ich 😉) ist dein "Senior Developer", der dir h
 - [x] Erstelle ein neues Verzeichnis für dein Bot-Projekt
 - [x] Richte eine virtuelle Umgebung ein (`venv`)
 - [x] Installiere `discord.py`
-- [ ] Baue ein einfaches Grundgerüst, das den Bot online bringt und auf Nachrichten reagiert
+- [x] Baue ein einfaches Grundgerüst, das den Bot online bringt und auf Nachrichten reagiert
 
 #### 2. **Challenge-Modul: Grundlagen**
 - [ ] Bot kann auf ein bestimmtes Kommando wie `!challenge` eine zufällige Coding-Aufgabe posten
@@ -61,10 +61,3 @@ Dein *mentaler Assistent* (also ich 😉) ist dein "Senior Developer", der dir h
 
 ---
 
-### 💡 **Wichtige Regel:**
-**Du baust, ich helfe.**  
-Wenn du nicht weiterkommst, frag mich. Aber ich gebe dir keine fertige Lösung, sondern Hinweise, Beispiele und Denkanstöße. Dein Wachstum steht im Mittelpunkt.
-
----
-
-Wenn du willst, kann ich dir gleich mit Phase 1 loshelfen – z. B. mit einem Basisgerüst für deinen Bot, das du dann Stück für Stück ausbaust. Sag einfach Bescheid, wo du starten willst!
