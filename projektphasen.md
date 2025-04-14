@@ -27,9 +27,9 @@ Dein *mentaler Assistent* (also ich 😉) ist dein "Senior Developer", der dir h
 ### 🗂️ **Projektphasen:**
 
 #### 1. **Projektsetup**
-- [ ] Erstelle ein neues Verzeichnis für dein Bot-Projekt
-- [ ] Richte eine virtuelle Umgebung ein (`venv`)
-- [ ] Installiere `discord.py`
+- [x] Erstelle ein neues Verzeichnis für dein Bot-Projekt
+- [x] Richte eine virtuelle Umgebung ein (`venv`)
+- [x] Installiere `discord.py`
 - [ ] Baue ein einfaches Grundgerüst, das den Bot online bringt und auf Nachrichten reagiert
 
 #### 2. **Challenge-Modul: Grundlagen**
