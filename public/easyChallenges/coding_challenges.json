@@ -1,0 +1,60 @@
+[
+    {
+        "title": "Gerade Zahl prüfen",
+        "description": "Schreibe eine Funktion, die True zurückgibt, wenn eine Zahl gerade ist.",
+        "function_signature": "def ist_gerade(zahl):",
+        "examples": [
+            "ist_gerade(4) ➞ True",
+            "ist_gerade(7) ➞ False"
+        ]
+    },
+    {
+        "title": "Begrüßung generieren",
+        "description": "Schreibe eine Funktion, die einen Namen übergibt und eine Begrüßung zurückgibt.",
+        "function_signature": "def begruessung(name):",
+        "examples": [
+            "begruessung(\"Lena\") ➞ \"Hallo Lena!\""
+        ]
+    },
+    {
+        "title": "Max von zwei Zahlen",
+        "description": "Schreibe eine Funktion, die die größere von zwei Zahlen zurückgibt.",
+        "function_signature": "def maximum(a, b):",
+        "examples": [
+            "maximum(4, 9) ➞ 9"
+        ]
+    },
+    {
+        "title": "String umdrehen",
+        "description": "Schreibe eine Funktion, die einen Text rückwärts zurückgibt.",
+        "function_signature": "def rueckwaerts(text):",
+        "examples": [
+            "rueckwaerts(\"Hallo\") ➞ \"ollaH\""
+        ]
+    },
+    {
+        "title": "Vokale zählen",
+        "description": "Zähle, wie viele Vokale in einem Wort enthalten sind.",
+        "function_signature": "def anzahl_vokale(wort):",
+        "examples": [
+            "anzahl_vokale('Programmieren') ➞ 5"
+        ]
+    },
+    {
+        "title": "Ist Palindrom",
+        "description": "Prüfe, ob ein Wort ein Palindrom ist (vorwärts = rückwärts).",
+        "function_signature": "def ist_palindrom(wort):",
+        "examples": [
+            "ist_palindrom('otto') ➞ True",
+            "ist_palindrom('python') ➞ False"
+        ]
+    },
+    {
+        "title": "Alle Zahlen bis X aufsummieren",
+        "description": "Gib die Summe aller Zahlen von 1 bis x zurück.",
+        "function_signature": "def summe_bis(x):",
+        "examples": [
+            "summe_bis(5) ➞ 15"
+        ]
+    }
+]

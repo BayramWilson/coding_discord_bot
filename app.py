@@ -2,7 +2,7 @@ import discord
 import os
 from discord.ext import commands
 from dotenv import load_dotenv
-
+from services.challenger import create_coding_challenge
 load_dotenv() 
 
 TOKEN = os.getenv("TOKEN")
@@ -26,5 +26,12 @@ async def on_message(message):
     if message.content.startswith('!Ping'):
         await message.channel.send('Pong!')
 
+# coding challenger
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+    if message.content.startswith("!challenge"):
+        await message.channel.send(create_coding_challenge())
 
 bot.run(TOKEN)
