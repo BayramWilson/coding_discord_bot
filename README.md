@@ -19,7 +19,7 @@ Perfekt für alle, die spielerisch Python lernen wollen, indem sie Coding Challe
 ### 1. Projekt klonen oder lokal erstellen
 
 ```bash
-git clone https://github.com/dein-nutzername/coder-bot.git && 
+git clone https://github.com/BayramWilson/coding_discord_bot && 
 cd coder-bot && 
 python -m venv venv && 
 source venv/bin/activate &&
