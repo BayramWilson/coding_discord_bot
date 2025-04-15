@@ -20,7 +20,7 @@ Perfekt für alle, die spielerisch Python lernen wollen, indem sie Coding Challe
 
 ```bash
 git clone https://github.com/BayramWilson/coding_discord_bot && 
-cd coder-bot && 
+cd coding_discord_bot && 
 python -m venv venv && 
 source venv/bin/activate &&
 pip install -r requirements.txt &&
