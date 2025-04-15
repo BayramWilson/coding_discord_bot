@@ -30,3 +30,10 @@ def create_coding_challenge():
     return message_md_format
 
 print(create_coding_challenge())
+
+user_code = ""
+
+def check_solution(solution):
+    """This function checks a solution, written in the discord "level up" channel, and proves it wrong or right."""
+
+    return
