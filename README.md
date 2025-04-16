@@ -72,7 +72,7 @@ Dieser Bot wurde als Lernreise erstellt – Schritt für Schritt baust du Funkti
 - [ ] Website-Dashboard (optional)
 
 ---
-
+Yeah!
 ## 🧑‍💻 Lizenz
 
 Dieses Projekt ist **Open Source** – nutze es gerne als Lernbasis oder baue es weiter aus!
