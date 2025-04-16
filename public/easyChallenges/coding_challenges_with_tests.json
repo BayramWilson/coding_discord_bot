@@ -1,0 +1,191 @@
+[
+    {
+        "title": "Gerade Zahl prüfen",
+        "description": "Schreibe eine Funktion, die True zurückgibt, wenn eine Zahl gerade ist.",
+        "function_signature": "def ist_gerade(zahl):",
+        "examples": [
+            "ist_gerade(4) ➞ True",
+            "ist_gerade(7) ➞ False"
+        ],
+        "tests": [
+            {
+                "input": [
+                    4
+                ],
+                "expected": true
+            },
+            {
+                "input": [
+                    7
+                ],
+                "expected": false
+            },
+            {
+                "input": [
+                    0
+                ],
+                "expected": true
+            }
+        ]
+    },
+    {
+        "title": "Begrüßung generieren",
+        "description": "Schreibe eine Funktion, die einen Namen übergibt und eine Begrüßung zurückgibt.",
+        "function_signature": "def begruessung(name):",
+        "examples": [
+            "begruessung(\"Lena\") ➞ \"Hallo Lena!\""
+        ],
+        "tests": [
+            {
+                "input": [
+                    "Lena"
+                ],
+                "expected": "Hallo Lena!"
+            },
+            {
+                "input": [
+                    "Max"
+                ],
+                "expected": "Hallo Max!"
+            }
+        ]
+    },
+    {
+        "title": "Max von zwei Zahlen",
+        "description": "Schreibe eine Funktion, die die größere von zwei Zahlen zurückgibt.",
+        "function_signature": "def maximum(a, b):",
+        "examples": [
+            "maximum(4, 9) ➞ 9"
+        ],
+        "tests": [
+            {
+                "input": [
+                    4,
+                    9
+                ],
+                "expected": 9
+            },
+            {
+                "input": [
+                    10,
+                    2
+                ],
+                "expected": 10
+            },
+            {
+                "input": [
+                    5,
+                    5
+                ],
+                "expected": 5
+            }
+        ]
+    },
+    {
+        "title": "String umdrehen",
+        "description": "Schreibe eine Funktion, die einen Text rückwärts zurückgibt.",
+        "function_signature": "def rueckwaerts(text):",
+        "examples": [
+            "rueckwaerts(\"Hallo\") ➞ \"ollaH\""
+        ],
+        "tests": [
+            {
+                "input": [
+                    "Hallo"
+                ],
+                "expected": "ollaH"
+            },
+            {
+                "input": [
+                    "abc"
+                ],
+                "expected": "cba"
+            }
+        ]
+    },
+    {
+        "title": "Vokale zählen",
+        "description": "Zähle, wie viele Vokale in einem Wort enthalten sind.",
+        "function_signature": "def anzahl_vokale(wort):",
+        "examples": [
+            "anzahl_vokale('Programmieren') ➞ 5"
+        ],
+        "tests": [
+            {
+                "input": [
+                    "Programmieren"
+                ],
+                "expected": 5
+            },
+            {
+                "input": [
+                    "Test"
+                ],
+                "expected": 1
+            },
+            {
+                "input": [
+                    "xyz"
+                ],
+                "expected": 0
+            }
+        ]
+    },
+    {
+        "title": "Ist Palindrom",
+        "description": "Prüfe, ob ein Wort ein Palindrom ist (vorwärts = rückwärts).",
+        "function_signature": "def ist_palindrom(wort):",
+        "examples": [
+            "ist_palindrom('otto') ➞ True",
+            "ist_palindrom('python') ➞ False"
+        ],
+        "tests": [
+            {
+                "input": [
+                    "otto"
+                ],
+                "expected": true
+            },
+            {
+                "input": [
+                    "lagerregal"
+                ],
+                "expected": true
+            },
+            {
+                "input": [
+                    "python"
+                ],
+                "expected": false
+            }
+        ]
+    },
+    {
+        "title": "Alle Zahlen bis X aufsummieren",
+        "description": "Gib die Summe aller Zahlen von 1 bis x zurück.",
+        "function_signature": "def summe_bis(x):",
+        "examples": [
+            "summe_bis(5) ➞ 15"
+        ],
+        "tests": [
+            {
+                "input": [
+                    5
+                ],
+                "expected": 15
+            },
+            {
+                "input": [
+                    1
+                ],
+                "expected": 1
+            },
+            {
+                "input": [
+                    0
+                ],
+                "expected": 0
+            }
+        ]
+    }
+]

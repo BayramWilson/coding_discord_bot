@@ -29,7 +29,7 @@ Ziel: Du bleibst fokussiert, lernst nur das Nötige und baust gleichzeitig aktiv
 ### ✅ To-Dos:
 - [x] Eine einfache Seite mit `<form>`, `<textarea>` und Button bauen
 - [x] Styles per CSS oder inline gestalten
-- [ ] Editor später durch JS-Editor ersetzen
+- [x] Editor später durch JS-Editor ersetzen
 
 ---
 
@@ -46,7 +46,7 @@ Ziel: Du bleibst fokussiert, lernst nur das Nötige und baust gleichzeitig aktiv
 ### ✅ To-Dos:
 - [x] `<script>` und `<link>` via CDN in HTML einbinden
 - [x] Editor initialisieren
-- [ ] „Submit“-Button, der Code an Flask-Backend sendet
+- [x] „Submit“-Button, der Code an Flask-Backend sendet
 
 ---
 
@@ -63,10 +63,10 @@ Ziel: Du bleibst fokussiert, lernst nur das Nötige und baust gleichzeitig aktiv
 - [Flask in 5 Minuten (YouTube)](https://www.youtube.com/watch?v=Z1RJmh_OqeA) – nur wenn du visuell arbeitest
 
 ### ✅ To-Dos:
-- [ ] Flask-App in `webapp/app.py` erstellen
-- [ ] `@app.route("/challenge/<id>")` → zeigt HTML mit Challenge
-- [ ] `@app.route("/submit", methods=["POST"])` → empfängt Nutzereingabe
-- [ ] JSON mit Challenge-Lösung verarbeiten
+- [x] Flask-App in `webapp/app.py` erstellen
+- [x] `@app.route("/challenge/<id>")` → zeigt HTML mit Challenge
+- [x] `@app.route("/submit", methods=["POST"])` → empfängt Nutzereingabe
+- [x] JSON mit Challenge-Lösung verarbeiten
 
 ---
 
