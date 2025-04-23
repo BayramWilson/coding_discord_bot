@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  discord-bot:
+    build: .
+    container_name: coding-discord-bot
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./public:/app/public
+    env_file:
+      - .env.production
+    networks:
+      - bot-network
+
+networks:
+  bot-network:
+    driver: bridge 
