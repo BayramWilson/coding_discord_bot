@@ -33,8 +33,8 @@ Dein *mentaler Assistent* (also ich 😉) ist dein "Senior Developer", der dir h
 - [x] Baue ein einfaches Grundgerüst, das den Bot online bringt und auf Nachrichten reagiert
 
 #### 2. **Challenge-Modul: Grundlagen**
-- [ ] Bot kann auf ein bestimmtes Kommando wie `!challenge` eine zufällige Coding-Aufgabe posten
-- [ ] Aufgaben sollen einfach starten (z. B. "Schreibe eine Funktion, die prüft, ob eine Zahl gerade ist")
+- [x] Bot kann auf ein bestimmtes Kommando wie `!challenge` eine zufällige Coding-Aufgabe posten
+- [x] Aufgaben sollen einfach starten (z. B. "Schreibe eine Funktion, die prüft, ob eine Zahl gerade ist")
 
 #### 3. **Antwort-System**
 - [ ] Der Nutzer soll seine Lösung einsenden können (z. B. mit `!submit def ist_gerade(...)`)

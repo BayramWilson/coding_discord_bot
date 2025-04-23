@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Coding Challenge Editor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #editor {
+            height: 40vh;
+            border: 1px solid #ddd;
+            margin-top: 20px;
+        }
+        .challenge-card {
+            background-color: #f8f9fa;
+            border-left: 4px solid #0d6efd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        #result-container {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .result-success {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+        .result-error {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+        .challenge-list-item {
+            transition: all 0.2s;
+            border-left: 3px solid #0d6efd;
+        }
+        .challenge-list-item:hover {
+            background-color: #f1f8ff;
+            transform: translateX(5px);
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs/loader.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="mt-4">Python Coding Challenge Editor</h1>
+
+    {% if challenges_list %}
+    <!-- Challenge Übersicht -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <h2>Verfügbare Challenges</h2>
+            <p class="text-muted">Wähle eine Challenge aus, um sie zu lösen</p>
+            
+            <div class="list-group mt-3">
+                {% for challenge in challenges_list %}
+                <a href="/challenge/{{ challenge.id }}" class="list-group-item list-group-item-action challenge-list-item">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">🧠 {{ challenge.title }}</h5>
+                    </div>
+                    <p class="mb-1">{{ challenge.description }}</p>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% elif challenge %}
+    <!-- Challenge Information -->
+    <div class="challenge-card">
+        <h2>🧠 {{ challenge.title }}</h2>
+        <p><strong>Beschreibung:</strong> {{ challenge.description }}</p>
+        <div class="mb-3">
+            <strong>Startercode:</strong>
+            <pre><code>{{ challenge.function_signature }}</code></pre>
+        </div>
+        <div>
+            <strong>Beispiele:</strong>
+            <ul>
+                {% for example in challenge.examples %}
+                <li><code>{{ example }}</code></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="discordUsername">Discord Username (optional):</label>
+        <input type="text" class="form-control" id="discordUsername" placeholder="Dein Discord-Name">
+        <div class="form-text">Wenn du deinen Namen angibst, kann der Bot dir auch auf Discord antworten.</div>
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="themeSelect">Theme auswählen:</label>
+        <select class="form-select" id="themeSelect">
+            <option value="vs-light">Light</option>
+            <option value="vs-dark">Dark</option>
+            <option value="dracula">Dracula</option>
+            <option value="solarized-light">Solarized Light</option>
+            <option value="solarized-dark">Solarized Dark</option>
+            <option value="github-dark">GitHub Dark</option>
+            <option value="monokai">Monokai</option>
+        </select>
+    </div>
+
+    <div id="editor"></div>
+
+    <div class="d-flex gap-3 mt-3">
+        <button class="btn btn-success" onclick="runCode()">▶ Code ausführen</button>
+        <button class="btn btn-primary" onclick="submitCode()">Code einreichen</button>
+    </div>
+
+    <div id="output" class="mt-3 p-3 bg-dark text-light" style="min-height: 150px; white-space: pre-wrap;">
+        <strong>🔧 Ausgabe:</strong><br>
+        <span id="output-text">...</span>
+    </div>
+
+    <div id="result-container" class="mt-3">
+        <h3 id="result-title"></h3>
+        <div id="result-details"></div>
+    </div>
+    {% else %}
+    <div class="alert alert-warning">
+        Keine Challenges gefunden.
+    </div>
+    {% endif %}
+
+    <footer class="text-center mt-5 mb-4 text-muted" style="font-size: 0.9rem;">
+        <p>
+            <a href="/" class="text-decoration-none">Zurück zur Übersicht</a> | 
+            Teile dieses Editors basieren auf dem Beitrag von
+            <a href="https://codingshiksha.com/javascript/build-a-vscode-coding-ide-with-syntax-highlighting-using-monaco-editor-in-browser-using-js/" target="_blank" rel="noopener noreferrer">
+                codingshiksha.com
+            </a>
+        </p>
+    </footer>
+</div>
+
+<script>
+    {% if challenge %}
+    let editor;
+    const challengeId = {% if challenge_id is defined %}{{ challenge_id }}{% else %}0{% endif %};
+    
+    require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs' } });
+
+    require(['vs/editor/editor.main'], function () {
+        // Startercode setzen
+        let starterCode = "{{ challenge.function_signature }}";
+        
+        editor = monaco.editor.create(document.getElementById('editor'), {
+            value: starterCode,
+            language: 'python',
+            theme: 'vs-light',
+            fontSize: 14,
+            minimap: { enabled: false },
+            automaticLayout: true
+        });
+
+        // Theme: Custom definitions
+        monaco.editor.defineTheme('dracula', {
+            base: 'vs-dark',
+            inherit: true,
+            rules: [
+                { token: '', background: '282a36', foreground: 'f8f8f2' },
+                { token: 'comment', foreground: '6272a4' },
+                { token: 'keyword', foreground: 'ff79c6' },
+                { token: 'string', foreground: 'f1fa8c' }
+            ],
+            colors: { 'editor.background': '#282a36' }
+        });
+
+        monaco.editor.defineTheme('solarized-light', {
+            base: 'vs',
+            inherit: true,
+            rules: [
+                { token: '', foreground: '586e75', background: 'fdf6e3' },
+                { token: 'comment', foreground: '93a1a1' },
+                { token: 'keyword', foreground: '859900' },
+                { token: 'string', foreground: '2aa198' }
+            ],
+            colors: { 'editor.background': '#fdf6e3' }
+        });
+
+        monaco.editor.defineTheme('solarized-dark', {
+            base: 'vs-dark',
+            inherit: true,
+            rules: [
+                { token: '', foreground: '839496', background: '002b36' },
+                { token: 'comment', foreground: '586e75' },
+                { token: 'keyword', foreground: 'cb4b16' },
+                { token: 'string', foreground: '2aa198' }
+            ],
+            colors: { 'editor.background': '#002b36' }
+        });
+
+        monaco.editor.defineTheme('github-dark', {
+            base: 'vs-dark',
+            inherit: true,
+            rules: [
+                { token: '', foreground: 'c9d1d9', background: '0d1117' },
+                { token: 'comment', foreground: '8b949e' },
+                { token: 'keyword', foreground: 'ff7b72' },
+                { token: 'string', foreground: 'a5d6ff' }
+            ],
+            colors: { 'editor.background': '#0d1117' }
+        });
+
+        monaco.editor.defineTheme('monokai', {
+            base: 'vs-dark',
+            inherit: true,
+            rules: [
+                { token: '', foreground: 'f8f8f2', background: '272822' },
+                { token: 'comment', foreground: '75715e' },
+                { token: 'keyword', foreground: 'f92672' },
+                { token: 'string', foreground: 'a6e22e' }
+            ],
+            colors: { 'editor.background': '#272822' }
+        });
+
+        document.getElementById('themeSelect').addEventListener('change', function () {
+            const newTheme = this.value;
+            monaco.editor.setTheme(newTheme);
+        });
+    });
+
+    function runCode() {
+        const code = editor.getValue();
+
+        fetch("/run", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ code: code })
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("output-text").textContent = data.output;
+        })
+        .catch(err => {
+            document.getElementById("output-text").textContent = "❌ Fehler beim Ausführen.";
+            console.error(err);
+        });
+    }
+
+    function submitCode() {
+        const code = editor.getValue();
+        const discordUsername = document.getElementById("discordUsername").value;
+        
+        // Ergebnis-Container zurücksetzen
+        const resultContainer = document.getElementById("result-container");
+        resultContainer.style.display = "none";
+        resultContainer.classList.remove("result-success", "result-error");
+        
+        fetch("/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ 
+                code: code,
+                challenge_id: challengeId,
+                discord_username: discordUsername
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Ergebnis anzeigen
+            resultContainer.style.display = "block";
+            
+            if (data.status === "success") {
+                resultContainer.classList.add("result-success");
+                document.getElementById("result-title").textContent = "✅ " + data.message;
+            } else {
+                resultContainer.classList.add("result-error");
+                document.getElementById("result-title").textContent = "❌ " + data.message;
+            }
+            
+            // Details anzeigen
+            if (data.details) {
+                let detailsHtml = "<ul>";
+                data.details.forEach(detail => {
+                    const status = detail.passed ? "✅" : "❌";
+                    detailsHtml += `<li>${status} ${detail.test} → Erwartet: ${detail.expected}, Erhielt: ${detail.actual}</li>`;
+                });
+                detailsHtml += "</ul>";
+                document.getElementById("result-details").innerHTML = detailsHtml;
+            } else {
+                document.getElementById("result-details").textContent = "";
+            }
+            
+            // Wenn Discord-Username angegeben und Option aktiviert, wird das Ergebnis auch an Discord gesendet
+            if (discordUsername && data.discord_notification) {
+                document.getElementById("result-details").innerHTML += 
+                    `<div class="alert alert-info mt-3">
+                        Ergebnis wurde auch an Discord gesendet für Benutzer: ${discordUsername}
+                    </div>`;
+            }
+        })
+        .catch(err => {
+            resultContainer.style.display = "block";
+            resultContainer.classList.add("result-error");
+            document.getElementById("result-title").textContent = "❌ Fehler beim Einreichen";
+            document.getElementById("result-details").textContent = "Bitte versuche es später erneut.";
+            console.error(err);
+        });
+    }
+    {% endif %}
+</script>
+
+</body>
+</html>
