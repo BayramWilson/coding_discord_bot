@@ -1,6 +1,7 @@
 import discord
 import os
 import random
+import threading
 from discord.ext import commands
 from dotenv import load_dotenv
 from services.challenger import create_coding_challenge, check_solution
@@ -8,6 +9,17 @@ load_dotenv()
 
 TOKEN = os.getenv("TOKEN")
 WEB_APP_URL = os.getenv("WEB_APP_URL", "http://localhost:5000")
+DISCORD_CHANNEL_ID = os.getenv("DISCORD_CHANNEL_ID", "")
+
+# Starte die Webapp in einem separaten Thread
+def start_webapp():
+    from webapp.app import app
+    app.run(debug=False, host='0.0.0.0', port=5000)
+
+# Webapp im Hintergrund starten
+webapp_thread = threading.Thread(target=start_webapp, daemon=True)
+webapp_thread.start()
+print("Webapp gestartet auf http://localhost:5000")
 
 # Initialize Bot
 intents = discord.Intents.default()
@@ -26,7 +38,34 @@ async def ping(ctx):
 @bot.command(name="challenge")
 async def challenge(ctx):
     """Sendet eine Coding Challenge an den Channel"""
-    await ctx.send(create_coding_challenge())
+    # Zufällige Challenge auswählen
+    with open("./public/easyChallenges/coding_challenges.json", "r", encoding="utf-8") as f:
+        import json
+        challenges = json.load(f)
+        challenge_id = random.randint(0, len(challenges) - 1)
+    
+    # Challenge-Informationen
+    challenge = challenges[challenge_id]
+    
+    # Erstelle einen Link mit den Challenge-Informationen
+    import urllib.parse
+    starter_code = urllib.parse.quote(challenge["function_signature"])
+    challenge_url = f"{WEB_APP_URL}/challenge/{challenge_id}?code={starter_code}"
+    
+    # Erstelle einen Embed mit den Challenge-Informationen
+    embed = discord.Embed(
+        title=f"🧠 {challenge['title']}",
+        description=f"{challenge['description']}\n\n[In der Web-IDE öffnen]({challenge_url})",
+        color=0x3498db
+    )
+    
+    # Beispiele hinzufügen
+    example_text = "\n".join([f"• `{example}`" for example in challenge['examples']])
+    embed.add_field(name="Beispiele", value=example_text, inline=False)
+    
+    embed.set_footer(text="Tipp: Du kannst deinen Discord-Namen in der IDE eingeben, um eine Benachrichtigung zu erhalten!")
+    
+    await ctx.send(embed=embed)
 
 @bot.command(name="web")
 async def web_challenge(ctx, challenge_id=None):

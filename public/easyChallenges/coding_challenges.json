@@ -2,10 +2,14 @@
     {
         "title": "Gerade Zahl prüfen",
         "description": "Schreibe eine Funktion, die True zurückgibt, wenn eine Zahl gerade ist.",
-        "function_signature": "def ist_gerade(zahl):",
+        "function_signature": "def ist_gerade(zahl):\n    # Gib True zurück, wenn die Zahl gerade ist\n    # Beispiel: ist_gerade(4) gibt True zurück",
         "examples": [
             "ist_gerade(4) ➞ True",
             "ist_gerade(7) ➞ False"
+        ],
+        "test_cases": [
+            {"input": "ist_gerade(4)", "expected": true},
+            {"input": "ist_gerade(7)", "expected": false}
         ]
     },
     {

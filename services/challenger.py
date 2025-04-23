@@ -57,25 +57,34 @@ def check_solution(user_code, challenge_index=1):
     
     challenge = challenges[challenge_index]
     
-    # Beispiele und erwartete Ergebnisse extrahieren
-    test_cases = []
-    for example in challenge["examples"]:
-        parts = example.split(" ➞ ")
-        if len(parts) != 2:
-            continue
+    # Testfälle aus dem neuen "test_cases" Format laden, falls vorhanden
+    if "test_cases" in challenge and challenge["test_cases"]:
+        test_cases = []
+        for test_case in challenge["test_cases"]:
+            test_cases.append({
+                "call": test_case["input"],
+                "expected": test_case["expected"]
+            })
+    else:
+        # Fallback auf das alte Format mit examples
+        test_cases = []
+        for example in challenge["examples"]:
+            parts = example.split(" ➞ ")
+            if len(parts) != 2:
+                continue
+                
+            # Funktionsaufruf parsen
+            func_call = parts[0].strip()
+            expected_result = parts[1].strip()
             
-        # Funktionsaufruf parsen
-        func_call = parts[0].strip()
-        expected_result = parts[1].strip()
-        
-        # Anführungszeichen bei Strings erhalten
-        if expected_result.startswith('"') and expected_result.endswith('"'):
-            expected_result = expected_result[1:-1]
-        
-        test_cases.append({
-            "call": func_call,
-            "expected": expected_result
-        })
+            # Anführungszeichen bei Strings erhalten
+            if expected_result.startswith('"') and expected_result.endswith('"'):
+                expected_result = expected_result[1:-1]
+            
+            test_cases.append({
+                "call": func_call,
+                "expected": expected_result
+            })
     
     # Prüfen, ob der Code die Funktion definiert
     try:
@@ -112,30 +121,39 @@ def check_solution(user_code, challenge_index=1):
                     exec(call_code, {}, test_vars)
                     actual_result = test_vars["result"]
                     
-                    # Erwartetes Ergebnis konvertieren
-                    if expected_result.lower() == "true":
-                        expected = True
-                    elif expected_result.lower() == "false":
-                        expected = False
-                    else:
-                        # Versuchen, zu einer Zahl zu konvertieren
-                        try:
-                            expected = int(test["expected"])
-                        except ValueError:
-                            try:
-                                expected = float(test["expected"])
-                            except ValueError:
-                                # Alles andere als String behandeln
-                                expected = test["expected"]
+                    # Erwartetes Ergebnis verarbeiten
+                    expected = test["expected"]
                     
-                    # Ergebnis vergleichen
-                    if str(actual_result) == str(expected) or actual_result == expected:
-                        passed = True
-                        status = "✅"
-                    else:
-                        passed = False
-                        all_passed = False
-                        status = "❌"
+                    # Wenn expected ein String ist, versuchen wir zu konvertieren
+                    if isinstance(expected, str):
+                        # Convert expected string to appropriate type
+                        expected_str = expected
+                        
+                        # Try to convert expected result to the same type as actual result
+                        try:
+                            if isinstance(actual_result, bool):
+                                if expected_str.lower() == "true":
+                                    expected = True
+                                elif expected_str.lower() == "false":
+                                    expected = False
+                                else:
+                                    expected = bool(expected_str)
+                            elif isinstance(actual_result, int):
+                                expected = int(expected_str)
+                            elif isinstance(actual_result, float):
+                                expected = float(expected_str)
+                        except (ValueError, TypeError):
+                            # If conversion fails, keep as string
+                            pass
+                    
+                    # Direct equality check
+                    passed = actual_result == expected
+                    
+                    # Display in console for debugging
+                    print(f"TEST: {test['call']} → Expected: {expected} ({type(expected)}), Got: {actual_result} ({type(actual_result)}), Passed: {passed}")
+                    
+                    status = "✅" if passed else "❌"
+                    all_passed = all_passed and passed
                     
                     results.append({
                         "test": test["call"],

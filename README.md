@@ -8,7 +8,9 @@ Perfekt für alle, die spielerisch Python lernen wollen, indem sie Coding Challe
 ## 🚀 Features
 
 - 📤 Postet zufällige Coding Challenges via `!challenge`
-- ✅ Reagiert auf Einreichungen mit Feedback (coming soon)
+- 🌐 Integrierte Web-IDE für das Lösen von Challenges
+- ✅ Automatisierte Überprüfung und Feedback zu Einreichungen
+- 📬 Benachrichtigungen im Discord-Channel nach Einreichung von Lösungen
 - 🔍 Zeigt Beispielantworten & Lösungen an
 - 📈 Motiviert zum täglichen Üben (Gamification geplant)
 
@@ -28,22 +30,41 @@ cp .env.example .env
 ```
 
 ### 2. .env Datei konfigurieren
+Die .env-Datei sollte mindestens folgende Einträge haben:
+```
+TOKEN=dein-discord-bot-token
+DISCORD_CHANNEL_ID=channel-id-für-benachrichtigungen
+WEB_APP_URL=http://localhost:5000
+```
 
 ### 3. Bot starten
+Mit dem neuen Start-Skript wird sowohl der Bot als auch die Web-App gestartet:
 
 ```bash
-python app.py
+python start.py
 ```
 
 ---
 
 ## 🧠 Beispielkommandos
 
-| Befehl       | Beschreibung                          |
-|--------------|---------------------------------------|
-| `!ping`      | Testet, ob der Bot online ist         |
-| `!challenge` | Gibt dir eine zufällige Challenge     |
-| `!help`      | Zeigt alle verfügbaren Befehle        |
+| Befehl       | Beschreibung                                       |
+|--------------|---------------------------------------------------|
+| `!ping`      | Testet, ob der Bot online ist                      |
+| `!challenge` | Gibt dir eine zufällige Challenge mit Web-IDE-Link |
+| `!submit`    | Reicht Code direkt über Discord ein                |
+| `!help`      | Zeigt alle verfügbaren Befehle                     |
+
+---
+
+## 🌐 Web-IDE Nutzung
+
+1. Klicke auf den Link aus dem `!challenge` Befehl
+2. Schreibe deine Lösung im Online-Editor
+3. Teste deinen Code mit dem "Code ausführen" Button
+4. Gib deinen Discord-Benutzernamen ein (optional)
+5. Klicke auf "Code einreichen", um deine Lösung zu überprüfen
+6. Das Ergebnis wird dir sowohl im Browser als auch im Discord-Channel angezeigt
 
 ---
 
@@ -51,6 +72,8 @@ python app.py
 
 - **Python 3.10+**
 - [`discord.py`](https://discordpy.readthedocs.io/)
+- **Flask** für die Web-App
+- **Monaco Editor** für die Web-IDE
 - `.env` via [`python-dotenv`](https://pypi.org/project/python-dotenv/)
 - **Lernziel:** sauberes Bot-Design & Challenge-Logik
 
@@ -65,7 +88,8 @@ Dieser Bot wurde als Lernreise erstellt – Schritt für Schritt baust du Funkti
 
 ## ✨ To-Do / Roadmap
 
-- [ ] Antwortprüfung für Coding-Challenges  
+- [x] Antwortprüfung für Coding-Challenges  
+- [x] Web-IDE-Integration
 - [ ] Punkte- oder Levelsystem  
 - [ ] Nutzerstatistiken  
 - [ ] Mehrsprachige Challenges  
